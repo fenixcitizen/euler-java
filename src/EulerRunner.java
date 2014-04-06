@@ -3,8 +3,6 @@
  */
 public abstract class EulerRunner {
 
-    protected static int STEP = 1;
-
     protected void execute() {
         long start = System.currentTimeMillis();
         String output = this.run();
@@ -14,13 +12,12 @@ public abstract class EulerRunner {
 
     protected void execute(int n) {
         int iter = 0;
-        String output;
         long start = System.currentTimeMillis();
         while (iter < n) {
             this.run();
             iter++;
         }
-        output = this.run();
+        String output = this.run();
         System.out.println("Avg time elapsed=" + ": " + ((System.currentTimeMillis() - start) / (n + 1)) + " miliseconds.");
         System.out.println("Solution is: " + output);
     }
