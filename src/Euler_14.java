@@ -3,7 +3,7 @@
  */
 public class Euler_14 extends EulerRunner {
 
-    private static long LIMIT = 1000000;
+    private static int LIMIT = 1000000;
 
     public static void main(String[] args) {
         new Euler_14().execute();
@@ -11,18 +11,24 @@ public class Euler_14 extends EulerRunner {
 
     @Override
     protected String run() {
-        long maxCycle = 0;
-        for (long iter = 13; iter < LIMIT; iter++) {
-            long currentValue = iter, currentCycleLength = 1;
-            while (currentValue != 1) {
+        int maxCycleLength = 0;
+        int maxCycleStartingNumber = 0;
+        int[] cache = new int[LIMIT];
+        cache[1] = 1;
+        for (int iter = 2; iter < LIMIT; iter++) {
+            long currentValue = iter;
+            int currentCycleLength = 1;
+            while (currentValue != 1 && currentValue >= iter) {
                 currentValue = getNextNumber(currentValue);
                 currentCycleLength++;
             }
-            if (currentCycleLength > maxCycle) {
-                maxCycle = currentCycleLength;
+            cache[iter] = currentCycleLength + cache[(int) currentValue];
+            if (cache[iter] > maxCycleLength) {
+                maxCycleLength = cache[iter];
+                maxCycleStartingNumber = iter;
             }
         }
-        return String.valueOf(maxCycle);
+        return String.valueOf(maxCycleStartingNumber);
     }
 
     private static long getNextNumber(long n) {
@@ -32,4 +38,5 @@ public class Euler_14 extends EulerRunner {
             return 3 * n + 1;
         }
     }
+
 }
