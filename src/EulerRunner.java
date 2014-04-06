@@ -13,10 +13,9 @@ public abstract class EulerRunner {
     }
 
     protected void execute(int n) {
-        long start = 0;
         int iter = 0;
-        String output = null;
-        start = System.currentTimeMillis();
+        String output;
+        long start = System.currentTimeMillis();
         while (iter < n) {
             this.run();
             iter++;
