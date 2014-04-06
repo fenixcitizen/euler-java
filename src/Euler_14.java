@@ -18,7 +18,6 @@ public class Euler_14 extends EulerRunner {
                 currentValue = getNextNumber(currentValue);
                 currentCycleLength++;
             }
-
             if (currentCycleLength > maxCycle) {
                 maxCycle = currentCycleLength;
             }
