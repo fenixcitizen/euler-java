@@ -9,7 +9,6 @@ public class Euler_63 extends EulerRunner {
 
     public static void main(String[] args) {
         new Euler_63().execute();
-        System.out.println(PrimesHelper.factorize(new BigInteger("600851475143")));
     }
 
     @Override
