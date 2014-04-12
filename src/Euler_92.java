@@ -5,7 +5,7 @@ public class Euler_92 extends EulerRunner {
 
     private static final int LIMIT = 10000000;
     private static final int CACHE_SIZE = 81 * 7; // second number is always smaller than that
-    private static boolean[] _89_Hitters = new boolean[CACHE_SIZE];
+    private final boolean[] _89_Hitters = new boolean[CACHE_SIZE];
 
     public static void main(String[] args) {
         new Euler_92().execute();
