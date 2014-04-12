@@ -4,8 +4,8 @@
 public class Euler_92 extends EulerRunner {
 
     private static final int LIMIT = 10000000;
-    private static final int CACHE_LIMIT = 81 * 7;
-    private static boolean[] _89_Hitters = new boolean[CACHE_LIMIT];
+    private static final int CACHE_SIZE = 81 * 7; // second number is always smaller than that
+    private static boolean[] _89_Hitters = new boolean[CACHE_SIZE];
 
     public static void main(String[] args) {
         new Euler_92().execute();
@@ -27,7 +27,7 @@ public class Euler_92 extends EulerRunner {
         int currentIter = start;
         currentIter = calculateNextChainNumber(currentIter);
         int secondIter = currentIter;
-        if (_89_Hitters[secondIter-1]) { // just check the second number found - checking every time is very consuming
+        if (_89_Hitters[secondIter - 1]) { // just check the second number found - checking every time is very time consuming
             return true;
         }
         while (currentIter != 1 && currentIter != 89) {
@@ -35,7 +35,7 @@ public class Euler_92 extends EulerRunner {
         }
         final boolean hits89 = currentIter == 89;
         if (hits89)
-            _89_Hitters[secondIter-1] = true;
+            _89_Hitters[secondIter - 1] = true;
         return hits89;
     }
 
