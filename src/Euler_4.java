@@ -7,7 +7,7 @@ public class Euler_4 extends EulerRunner {
     public static final int LOWER_LIMIT = 99;
 
     public static void main(String[] args) {
-        new Euler_4().execute(100000);
+        new Euler_4().execute();
     }
 
     @Override

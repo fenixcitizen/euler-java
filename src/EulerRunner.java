@@ -12,13 +12,13 @@ public abstract class EulerRunner {
 
     protected void execute(int n) {
         int iter = 0;
-        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
         while (iter < n) {
             this.run();
             iter++;
         }
         String output = this.run();
-        System.out.println("Avg time elapsed=" + ": " + ((System.currentTimeMillis() - start) / (n + 1)) + " miliseconds.");
+        System.out.println("Avg time elapsed=" + ": " + ((System.nanoTime() - start) / (n + 1)) + " nanoseconds.");
         System.out.println("Solution is: " + output);
     }
 
