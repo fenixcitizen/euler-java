@@ -2,7 +2,9 @@ package util;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static java.math.BigInteger.*;
 
@@ -137,5 +139,23 @@ public class PrimesHelper {
         }
         return compounds;
     }
+
+	/**
+	 * A function to obtain proper divisors of a given number n
+	 *
+	 * @param n input integer number
+	 * @return set of proper divisors
+	 */
+	public static Set<BigInteger> properDivisors(BigInteger n) {
+		Set<BigInteger> properDivisors = new HashSet<>();
+		BigInteger divCandidate = ONE;
+		while (divCandidate.compareTo(n) == -1) {
+			if (n.mod(divCandidate).equals(BigInteger.ZERO)){
+				properDivisors.add(divCandidate);
+			}
+			divCandidate = divCandidate.add(ONE);
+		}
+		return properDivisors;
+	}
 
 }
