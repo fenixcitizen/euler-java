@@ -1,6 +1,6 @@
 package util;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigInteger;
