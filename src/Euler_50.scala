@@ -31,11 +31,9 @@ object Euler_50 extends EulerRunner {
         val sum: Int = slice.sum
         (slice, sum, slice.length, isPrime(sum))
       }
-    val max: (Vector[Int], Int, Int, Boolean) = tuples
-      .filter((p: (Vector[Int], Int, Int, Boolean)) => p._4)
-      .max(new Ordering[(Vector[Int], Int, Int, Boolean)] {
-      override def compare(x: (Vector[Int], Int, Int, Boolean), y: (Vector[Int], Int, Int, Boolean)): Int = x._3.compareTo(y._3)
-    })
+    val max = tuples
+      .filter(_._4)
+      .max(Ordering.by((t: (_, _, Int, _)) => t._3))
     max._2.toString
   }
 
