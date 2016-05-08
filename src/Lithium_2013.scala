@@ -1,3 +1,4 @@
+import scala.collection.immutable.IndexedSeq
 
 /**
  * Created by mateusz on 03/05/16.
@@ -8,7 +9,7 @@ object Lithium_2013 extends EulerRunner {
   def PP: Int = 10
 
   def main(args: Array[String]) {
-    execute()
+    execute(99999)
   }
 
   override protected def run(): String = {
@@ -25,12 +26,12 @@ object Lithium_2013 extends EulerRunner {
 
   def calculateFreqs(clocks: Array[Spaces]): Set[(Spaces, Int)] = {
     clocks.toSet
-      .map((cat: Spaces) => (cat, clocks.count((x: Spaces) => same(x.spaces, cat.spaces.toList))))
+      .map((cat: Spaces) => (cat, clocks.count((x: Spaces) => same(x.spaces, cat.spaces))))
   }
 
   def parseClocks(A: Array[Array[Int]], P: Int): Array[Spaces] = {
     A.map(hands => {
-      val sortedHands: List[Int] = hands.sorted.toList
+      val sortedHands: Array[Int] = hands.sorted
       sortedHands
         .zip(rotate(1, sortedHands))
         .map({ case (firstHand, secondhand) =>
@@ -39,24 +40,24 @@ object Lithium_2013 extends EulerRunner {
           secondhand + (P - firstHand) // to address 00:00 crossing
         else
           space
-      }).toArray
+      })
     }).map(Spaces)
   }
 
-  def same(cat: Array[Int], setup: List[Int]): Boolean = {
-    val rotations: IndexedSeq[List[Int]] = for {rotationSize <- cat.indices} yield rotate(rotationSize, setup)
+  def same(cat: Array[Int], setup: Array[Int]): Boolean = {
+    val rotations: IndexedSeq[Array[Int]] = for {rotationSize <- cat.indices} yield rotate(rotationSize, setup)
     rotations.exists(rotation => cat sameElements rotation)
   }
 
-  def rotate[A](n: Int, l: List[A]): List[A] = {
+  def rotate[A](n: Int, l: Array[A])(implicit m:ClassManifest[A]): Array[A] = {
     val wrapn = if (l.isEmpty) 0 else n % l.length
     if (wrapn < 0) rotate(l.length + n, l)
-    else l.drop(wrapn) ::: l.take(wrapn)
+    else l.drop(wrapn).++(l.take(wrapn))
   }
 
   case class Spaces(spaces: Array[Int]) {
     override def equals(o: Any) = o match {
-      case (that: Spaces) => same(this.spaces, that.spaces.toList)
+      case (that: Spaces) => same(this.spaces, that.spaces)
       case _ => false
     }
 

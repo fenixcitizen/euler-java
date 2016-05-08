@@ -21,8 +21,4 @@ class Lithium_2013_Test extends FlatSpec with Matchers {
       Lithium_2013.solution(A, 5) should be (10)
     }
 
-    "Edge case" should "not generate incorrect frequencies" in {
-      def A: Array[Array[Int]] = Array(Array(6, 2, 4, 5, 7, 2), Array(3, 5, 7, 3, 6, 2), Array(5, 6, 5, 4, 4, 4), Array(6, 6, 1, 3, 4, 5), Array(1, 4, 4, 4, 7, 2), Array(7, 3, 1, 3, 3, 6))
-      Lithium_2013.solution(A, 5) should be (10)
-    }
 }
