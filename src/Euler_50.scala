@@ -31,10 +31,11 @@ object Euler_50 extends EulerRunner {
         val sum: Int = slice.sum
         (slice, sum, slice.length, isPrime(sum))
       }
-    val max = tuples
+    tuples
       .filter(_._4)
       .max(Ordering.by((t: (_, _, Int, _)) => t._3))
-    max._2.toString
+      ._2
+      .toString
   }
 
 
