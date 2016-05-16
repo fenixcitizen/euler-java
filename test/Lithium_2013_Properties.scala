@@ -34,7 +34,7 @@ class Lithium_2013_Properties extends JUnitSuite with Checkers {
     val list: Gen[List[List[Int]]] = genList(Gen.choose(1, P), numOfClocks, numOfHands)
     check(forAllNoShrink(list) { (clocks: List[List[Int]]) => {
       val A: Array[Array[Int]] = clocks.map(_.toArray).toArray
-      var freqs: Set[(Spaces, Int)] = Lithium_2013.calculateFreqs(Lithium_2013.parseClocks(A, P))
+      var freqs: Map[Spaces, Int] = Lithium_2013.calculateFreqs(Lithium_2013.parseClocks(A, P))
       val sumOfFreqs: Int = freqs.foldLeft(0)({ case (acc: Int, (_, freq: Int)) => acc + freq })
 //      println("sumOfFreqs:" + sumOfFreqs)
       sumOfFreqs == clocks.length

@@ -1,6 +1,5 @@
 import java.util
 
-import scala.collection.immutable.IndexedSeq
 import scala.reflect.ClassTag
 
 /**
@@ -23,14 +22,13 @@ object Lithium_2013 extends EulerRunner {
   def solution(A: Array[Array[Int]], P: Int): Int = {
     val clocks: Array[Spaces] = parseClocks(A, P)
 
-    val freqs: Set[(Spaces, Int)] = calculateFreqs(clocks)
+    val freqs: Map[Spaces, Int] = calculateFreqs(clocks)
 
     freqs.foldLeft(0)({ case (acc: Int, (spaces: Spaces, freq: Int)) => acc + freq * (freq - 1) / 2 })
   }
 
-  def calculateFreqs(clocks: Array[Spaces]): Set[(Spaces, Int)] = {
-    clocks.toSet
-      .map((cat: Spaces) => (cat, clocks.count((x: Spaces) => x.equals(cat))))
+  def calculateFreqs(clocks: Array[Spaces]): Map[Spaces, Int] = {
+    clocks.groupBy(identity).mapValues(_.length)
   }
 
   def parseClocks(A: Array[Array[Int]], P: Int): Array[Spaces] = {
@@ -48,11 +46,6 @@ object Lithium_2013 extends EulerRunner {
     }).map((as: Array[Int]) => new Spaces(as))
   }
 
-  def same(cat: Array[Int], setup: Array[Int]): Boolean = {
-    val rotations: IndexedSeq[Array[Int]] = for {rotationSize <- cat.indices} yield rotate(rotationSize, setup)
-    rotations.exists(rotation => cat sameElements rotation)
-  }
-
   def rotate[A](n: Int, l: Array[A])(implicit m: ClassTag[A]): Array[A] = {
     val wrapn = if (l.isEmpty) 0 else n % l.length
     if (wrapn < 0) rotate(l.length + n, l)
@@ -65,13 +58,15 @@ object Lithium_2013 extends EulerRunner {
       this(spaces, util.Arrays.toString((for {rotationSize <- spaces.indices} yield rotate(rotationSize, spaces)).min(new Ordering[Array[Int]] {
         override def compare(xs: Array[Int], ys: Array[Int]): Int = {
           require(xs.length == ys.length)
-          xs.zip(ys).foldLeft(0) { case (z, (x, y)) =>
-            if (z != 0)
-              z
-            else {
-              if (x < y) -1 else if (x == y) 0 else 1
-            }
+          var iter: Int = 0
+          while (iter < xs.length) {
+            if (xs(iter) < ys(iter))
+              return -1
+            else if (xs(iter) > ys(iter))
+              return 1
+            iter += 1
           }
+          0
         }
       }): Array[Int]))
     }
